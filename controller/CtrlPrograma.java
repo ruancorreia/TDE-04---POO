@@ -1,83 +1,69 @@
 package controller;
 
 import controller.departamento.CtrlManterDepartamentos;
+import controller.empregado.CtrlManterEmpregados;
+import controller.projeto.CtrlManterProjetos;
 import viewer.JanelaPrincipal;
 
-/**
- * Este é o controlador 
- */
 public class CtrlPrograma extends CtrlAbstrato {
-	//
-	// ATRIBUTOS
-	//
-	
-	// Referência para o viewer associado ao CtrlPrograma
-	private JanelaPrincipal          janelaPrincipal;
-	// Referências para os Casos de Uso que o CtrlPrograma pode demandar
-	// sua execução.
-	private CtrlManterDepartamentos  ctrlManterDepartamentos; 
-	private CtrlIncluirEmpregado     ctrlIncluirEmpregado; 
-	
-	//
-	// MÉTODOS
-	//
-	public CtrlPrograma() {
-		// Chamando o construtor da superclasse CtrlAbstrato
-		// Como o CtrlPrograma não é demandado por ninguém,
-		// é o único controlador que não tem "pai", daí o 
-		// parâmetro ser 'null'
-		super(null);
-		// Solicita a apresentação do viewer
-		this.janelaPrincipal = new JanelaPrincipal(this);
-		this.janelaPrincipal.apresentar();
-	}
-	
-	/**
-	 * Iniciando o caso de uso Manter Departamentos
-	 */
-	public void iniciarManterDepartamentos() {
-		if(this.ctrlManterDepartamentos == null)
-			this.ctrlManterDepartamentos = new CtrlManterDepartamentos(this);
-		else
-			this.janelaPrincipal.notificar("Este Caso de Uso já está em execução!");
-	}
+    private JanelaPrincipal janelaPrincipal;
+    private CtrlManterDepartamentos ctrlManterDepartamentos;
+    private CtrlManterEmpregados ctrlManterEmpregados;
+    private CtrlManterProjetos ctrlManterProjetos;
 
-	/**
-	 * Encerrando o caso de uso Manter Departamentos
-	 */
-	public void manterDepartamentosFinalizado() {
-		this.ctrlManterDepartamentos = null;		
-	}
+    public CtrlPrograma() {
+        super(null);
+        this.janelaPrincipal = new JanelaPrincipal(this);
+        this.janelaPrincipal.apresentar();
+    }
 
-	/**
-	 * Iniciando o caso de uso Incluir Empregado
-	 */
-	public void iniciarIncluirEmpregado() {
-		if(this.ctrlIncluirEmpregado == null)
-			this.ctrlIncluirEmpregado = new CtrlIncluirEmpregado(this);
-		else
-			this.janelaPrincipal.notificar("Este Caso de Uso já está em execução!");
-	}
+    public void iniciarManterDepartamentos() {
+        if (this.ctrlManterDepartamentos == null) {
+            this.ctrlManterDepartamentos = new CtrlManterDepartamentos(this);
+        } else {
+            this.janelaPrincipal.notificar("O caso de uso 'Manter Departamentos' já está em execução!");
+        }
+    }
 
-	/**
-	 * Encerrando o caso de uso Incluir Empregado
-	 */
-	public void incluirEmpregadoFinalizado() {
-		this.ctrlIncluirEmpregado = null;		
-	}
+    public void manterDepartamentosFinalizado() {
+        this.ctrlManterDepartamentos = null;
+    }
 
-	/**
-	 * Encerrando o programa
-	 */
-	public void encerrar() {
-		System.exit(0);
-	}
+    public void iniciarManterEmpregados() {
+        if (this.ctrlManterEmpregados == null) {
+            this.ctrlManterEmpregados = new CtrlManterEmpregados(this);
+        } else {
+            this.janelaPrincipal.notificar("O caso de uso 'Manter Empregados' já está em execução!");
+        }
+    }
 
-	public Object getBemTangivel() {
-		return null;
-	}
-	
-	public static void main(String[] args) throws Exception {
-		new CtrlPrograma();
-	}
+    public void manterEmpregadosFinalizado() {
+        this.ctrlManterEmpregados = null;
+    }
+
+    public void iniciarManterProjetos() {
+        if (this.ctrlManterProjetos == null) {
+            this.ctrlManterProjetos = new CtrlManterProjetos(this);
+        } else {
+            this.janelaPrincipal.notificar("O caso de uso 'Manter Projetos' já está em execução!");
+        }
+    }
+
+    public void manterProjetosFinalizado() {
+        this.ctrlManterProjetos = null;
+    }
+
+    @Override
+    public void encerrar() {
+        System.exit(0);
+    }
+
+    @Override
+    public Object getBemTangivel() {
+        return null;
+    }
+
+    public static void main(String[] args) {
+        new CtrlPrograma();
+    }
 }
